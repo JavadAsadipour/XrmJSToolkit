@@ -12,7 +12,7 @@
 **********************************************************************************************************
 *   Version: 1.0.0
 *   Date: December, 2022
-*       Classes Added:
+*       Sections Added:
 *           XrmJSToolkit.Form
 *           XrmJSToolkit.Api
 *           XrmJSToolkit.Enumerables
@@ -28,6 +28,31 @@ var XrmJSToolkit = (function () {
     var formContext;
 
     var globalContext;
+
+
+    var initialize = function (executionContext) {
+
+        executionContext = executionContext;
+
+        formContext = executionContext.getFormContext();
+
+        globalContext = Xrm.Utility.getGlobalContext();
+
+    };
+
+
+    var isArray = function (input) {
+
+        return input.constructor.toString().indexOf("Array") !== -1;
+
+    };
+
+
+    var isString = function (input) {
+
+        return input.constructor.toString().indexOf("String") !== -1;
+
+    };
 
     //Enumerables Class
 
@@ -85,33 +110,23 @@ var XrmJSToolkit = (function () {
     //END Enumerables Class
 
 
-    var initialize = function (executionContext) {
-
-        executionContext = executionContext;
-
-        formContext = executionContext.getFormContext();
-
-        globalContext = Xrm.Utility.getGlobalContext();
-
-    };
-
-
     //Form Class
 
     var form = (function () {
 
         var hideField = function (fieldName) {
 
-            if (typeof (fieldName) == "object") {
+            if (isArray(fieldName)) {
 
                 fieldName.forEach(
+
                     function (field) {
 
                         formContext.getControl(field).setVisible(false);
 
                     });
 
-            } else if (typeof (fieldName) == "string") {
+            } else if (isString(fieldName)) {
 
                 formContext.getControl(fieldName).setVisible(false);
 
@@ -122,16 +137,17 @@ var XrmJSToolkit = (function () {
 
         let showField = function (fieldName) {
 
-            if (typeof (fieldName) == "object") {
+            if (isArray(fieldName)) {
 
                 fieldName.forEach(
+
                     function (field) {
 
                         formContext.getControl(field).setVisible(true);
 
                     });
 
-            } else if (typeof (fieldName) == "string") {
+            } else if (isString(fieldName)) {
 
                 formContext.getControl(fieldName).setVisible(true);
 
@@ -142,16 +158,17 @@ var XrmJSToolkit = (function () {
 
         let enableField = function (fieldName) {
 
-            if (typeof (fieldName) == "object") {
+            if (isArray(fieldName)) {
 
                 fieldName.forEach(
+
                     function (field) {
 
                         formContext.getControl(field).setDisabled(false);
 
                     });
 
-            } else if (typeof (fieldName) == "string") {
+            } else if (isString(fieldName)) {
 
                 formContext.getControl(fieldName).setDisabled(false);
 
@@ -162,16 +179,17 @@ var XrmJSToolkit = (function () {
 
         let disableField = function (fieldName) {
 
-            if (typeof (fieldName) == "object") {
+            if (isArray(fieldName)) {
 
                 fieldName.forEach(
+
                     function (field) {
 
                         formContext.getControl(field).setDisabled(true);
 
                     });
 
-            } else if (typeof (fieldName) == "string") {
+            } else if (isString(fieldName)) {
 
                 formContext.getControl(fieldName).setDisabled(true);
 
@@ -182,16 +200,17 @@ var XrmJSToolkit = (function () {
 
         let setFieldAsRequired = function (fieldName) {
 
-            if (typeof (fieldName) == "object") {
+            if (isArray(fieldName)) {
 
                 fieldName.forEach(
+
                     function (field) {
 
                         updateRequirementLevel(field, "required");
 
                     });
 
-            } else if (typeof (fieldName) == "string") {
+            } else if (isString(fieldName)) {
 
                 updateRequirementLevel(fieldName, "required");
 
@@ -202,16 +221,17 @@ var XrmJSToolkit = (function () {
 
         let setFieldAsOptional = function (fieldName) {
 
-            if (typeof (fieldName) == "object") {
+            if (isArray(fieldName)) {
 
                 fieldName.forEach(
+
                     function (field) {
 
                         updateRequirementLevel(field, "none");
 
                     });
 
-            } else if (typeof (fieldName) == "string") {
+            } else if (isString(fieldName)) {
 
                 updateRequirementLevel(fieldName, "none");
 
@@ -222,16 +242,17 @@ var XrmJSToolkit = (function () {
 
         let setFieldAsRecommended = function (fieldName) {
 
-            if (typeof (fieldName) == "object") {
+            if (isArray(fieldName)) {
 
                 fieldName.forEach(
+
                     function (field) {
 
                         updateRequirementLevel(field, "recommended");
 
                     });
 
-            } else if (typeof (fieldName) == "string") {
+            } else if (isString(fieldName)) {
 
                 updateRequirementLevel(fieldName, "recommended");
 
@@ -242,16 +263,17 @@ var XrmJSToolkit = (function () {
 
         let clearFieldValue = function (fieldName) {
 
-            if (typeof (fieldName) == "object") {
+            if (isArray(fieldName)) {
 
                 fieldName.forEach(
+
                     function (field) {
 
                         formContext.getAttribute(field).setValue(null);
 
                     });
 
-            } else if (typeof (fieldName) == "string") {
+            } else if (isString(fieldName)) {
 
                 formContext.getAttribute(fieldName).setValue(null);
 
@@ -262,16 +284,17 @@ var XrmJSToolkit = (function () {
 
         let removeOptionFromChoice = function (fieldName, optionValue) {
 
-            if (typeof (optionValue) == "object") {
+            if (isArray(fieldName)) {
 
                 optionValue.forEach(
+
                     function (value) {
 
                         formContext.getControl(fieldName).removeOption(value);
 
                     });
 
-            } else if (typeof (fieldName) == "string") {
+            } else if (isString(fieldName)) {
 
                 formContext.getControl(fieldName).removeOption(optionValue);
 
@@ -282,16 +305,17 @@ var XrmJSToolkit = (function () {
 
         let hideQuickForm = function (quickFormName) {
 
-            if (typeof (quickFormName) == "object") {
+            if (isArray(quickFormName)) {
 
                 quickFormName.forEach(
+
                     function (quickForm) {
 
                         formContext.ui.quickForms.get(quickForm).setVisible(false);
 
                     });
 
-            } else if (typeof (quickFormName) == "string") {
+            } else if (isString(quickFormName)) {
 
                 formContext.ui.quickForms.get(quickFormName).setVisible(false);
 
@@ -302,16 +326,17 @@ var XrmJSToolkit = (function () {
 
         let showQuickForm = function (quickFormName) {
 
-            if (typeof (quickFormName) == "object") {
+            if (isArray(quickFormName)) {
 
                 quickFormName.forEach(
+
                     function (quickForm) {
 
                         formContext.ui.quickForms.get(quickForm).setVisible(true);
 
                     });
 
-            } else if (typeof (quickFormName) == "string") {
+            } else if (isString(quickFormName)) {
 
                 formContext.ui.quickForms.get(quickFormName).setVisible(true);
 
@@ -746,6 +771,52 @@ var XrmJSToolkit = (function () {
         };
 
 
+        let updateRecordAsync = async function (entityName, id, data) {
+
+            var returnData = null;
+
+            await Xrm.WebApi.updateRecord(entityName, id, data).then(
+                function success(result) {
+
+                    returnData = result;
+
+                },
+
+                function (error) {
+
+                    console.log("ERROR in XrmJSToolkit UpdateRecordAsync\r\n" + error.message);
+
+                }
+            );
+
+            return returnData;
+
+        };
+
+
+        let deleteRecordAsync = async function (entityName, id) {
+
+            var returnData = null;
+
+            await Xrm.WebApi.deleteRecord(entityName, id).then(
+                function success(result) {
+
+                    returnData = result;
+
+                },
+
+                function (error) {
+
+                    console.log("ERROR in XrmJSToolkit DeleteRecordAsync\r\n" + error.message);
+
+                }
+            );
+
+            return returnData;
+
+        };
+
+
         let executeRequestAsync = async function (request) {
 
             let data = null;
@@ -763,6 +834,7 @@ var XrmJSToolkit = (function () {
                     console.log("ERROR in XrmJSToolkit ExecuteRequestAsync\r\n" + error.message);
 
                 }
+
             );
 
             return data;
@@ -839,6 +911,10 @@ var XrmJSToolkit = (function () {
 
             CreateRecordAsync: createRecordAsync,
 
+            UpdateRecordAsync: updateRecordAsync,
+
+            DeleteRecordAsync: deleteRecordAsync,
+
             ExecuteRequestAsync: executeRequestAsync,
 
             CalculateRollupField: calculateRollupField
@@ -911,9 +987,72 @@ var XrmJSToolkit = (function () {
 
         }
 
+
+        let getCurrentUserId = function () {
+
+            return Xrm.Utility.getGlobalContext().userSettings.userId.replace("{", "").replace("}", "");
+
+        }
+
+
+        let getCurrentUserName = function () {
+
+            return Xrm.Utility.getGlobalContext().userSettings.userName;
+
+        }
+
+
+        let getCurrentUserRoles = function () {
+
+            return Xrm.Utility.getGlobalContext().userSettings.roles;
+
+        }
+
+
+        let getCurrentUserSettings = function () {
+
+            return Xrm.Utility.getGlobalContext().userSettings;
+
+        }
+
+
+        let getCurrentUserBusinessUnitId = async function () {
+
+            let userId = getCurrentUserId();
+
+            let userInfo = await api.RetrieveRecordAsync("systemuser", userId, "?$select=fullname&$expand=businessunitid($select=name)");
+
+            return userInfo.businessunitid.businessunitid.replace("{", "").replace("}", "");
+
+        }
+
+
+        let getCurrentUserBusinessUnitName = async function () {
+
+            let userId = getCurrentUserId();
+
+            let userInfo = await api.RetrieveRecordAsync("systemuser", userId, "?$select=fullname&$expand=businessunitid($select=name)");
+
+            return userInfo.businessunitid.name;
+
+        }
+
+
         return {
 
-            HasCurrentUserRole: hasCurrentUserRole
+            GetCurrentUserId: getCurrentUserId,
+
+            GetCurrentUserName: getCurrentUserName,
+
+            GetCurrentUserRoles: getCurrentUserRoles,
+
+            GetCurrentUserSettings: getCurrentUserSettings,
+
+            HasCurrentUserRole: hasCurrentUserRole,
+
+            GetCurrentUserBusinessUnitName: getCurrentUserBusinessUnitName,
+
+            GetCurrentUserBusinessUnitId: getCurrentUserBusinessUnitId
 
         };
 
