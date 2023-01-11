@@ -1,5 +1,5 @@
 /**
-* Dynamics CRM Online, JavaScript Toolkit for JavaScript
+* Dynamics CRM Online, JavaScript Toolkit for Client-Side Development
 * @author Javad Asadipour
 * @current version : 1.0.0
 
