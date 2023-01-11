@@ -284,7 +284,7 @@ var XrmJSToolkit = (function () {
 
         let removeOptionFromChoice = function (fieldName, optionValue) {
 
-            if (isArray(fieldName)) {
+            if (isArray(optionValue)) {
 
                 optionValue.forEach(
 
@@ -294,7 +294,7 @@ var XrmJSToolkit = (function () {
 
                     });
 
-            } else if (isString(fieldName)) {
+            } else {
 
                 formContext.getControl(fieldName).removeOption(optionValue);
 
